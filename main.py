@@ -14,6 +14,7 @@ from src.api.exceptions.auth import (
     CacheServiceException,
     ServerErrorException,
     EmailServiceUnavailableException,
+    UserNotFoundException
 )
 
 app = FastAPI()
@@ -31,6 +32,16 @@ app.add_middleware(
 
 
 # Обработчики исключений
+@app.exception_handler(UserNotFoundException)
+async def user_already_exists_exception_handler(
+    request: Request, exc: UserAlreadyExistsException
+):
+    return JSONResponse(
+        status_code=404,
+        content={"detail": "UserNotFoundException"},
+    )
+
+
 @app.exception_handler(UserAlreadyExistsException)
 async def user_already_exists_exception_handler(
     request: Request, exc: UserAlreadyExistsException

@@ -18,3 +18,6 @@ class ServerErrorException(Exception):
 
 class InvalidAccessTokenException(Exception):
     pass
+
+class UserNotFoundException(Exception):
+    pass
